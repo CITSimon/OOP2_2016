@@ -1,3 +1,4 @@
+package model;
 //This is a tidier version of MyExpenseApplication. In this case we have "encapsulated" / "wrapped up" some of the more 
 //complex logic like the ArrayList and the for loop in another class called ExpenseList so that we can re-use it.
 

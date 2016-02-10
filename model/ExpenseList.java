@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 
 public class ExpenseList 
@@ -19,9 +21,13 @@ public class ExpenseList
 		double monthlyTotal = 0.0;		
 		for(Expense exp : expenses)
 		{
-			System.out.println(exp.getName() + " "+exp.getAmount());
 			monthlyTotal += exp.calculateCostPerMonth();
 		}
 		return monthlyTotal;
+	}
+	
+	public ArrayList<Expense> getExpenses()
+	{
+		return this.expenses;
 	}
 }

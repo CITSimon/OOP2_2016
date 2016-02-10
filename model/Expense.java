@@ -1,5 +1,6 @@
+package model;
 
-public abstract class Expense 
+public abstract class Expense implements Comparable<Expense> 
 {
 	private double amount;
 	private String name;
@@ -28,6 +29,23 @@ public abstract class Expense
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+	
+	//Implement Comparable interface
+	public int compareTo(Expense otherExpense)
+	{
+		if(this.amount < otherExpense.getAmount())
+		{
+			return -1;
+		}
+		else if(this.amount > otherExpense.getAmount())
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
 	}
 	
 	public abstract double calculateCostPerMonth();

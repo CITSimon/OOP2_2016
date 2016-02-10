@@ -1,3 +1,4 @@
+package model;
 
 public class MonthlyExpense extends Expense 
 {
