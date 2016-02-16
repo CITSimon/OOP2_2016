@@ -1,6 +1,8 @@
 package model;
 
-public class AnnualExpense extends Expense {
+import java.io.Serializable;
+
+public class AnnualExpense extends Expense implements Serializable{
 	
 	private String description;
 	
@@ -15,5 +17,10 @@ public class AnnualExpense extends Expense {
 	public double calculateCostPerMonth()
 	{
 		return getAmount() / MONTHS_IN_YEAR;
+	}
+	
+	public String toString()
+	{
+		return super.toString() + " "+this.description;
 	}
 }

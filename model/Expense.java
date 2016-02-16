@@ -1,6 +1,8 @@
 package model;
 
-public abstract class Expense implements Comparable<Expense> 
+import java.io.Serializable;
+
+public abstract class Expense implements Comparable<Expense>, Serializable 
 {
 	private double amount;
 	private String name;
@@ -49,4 +51,10 @@ public abstract class Expense implements Comparable<Expense>
 	}
 	
 	public abstract double calculateCostPerMonth();
+	
+	//Override the toString() method
+	public String toString()
+	{
+		return this.amount+" "+this.name;
+	}
 }

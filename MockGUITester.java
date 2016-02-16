@@ -30,6 +30,9 @@ public class MockGUITester {
 		//Show the total
 		System.out.println("Total Monthly Expense = "+ExpensesController.getInstance().getMonthlyCost());
 		
+		//Save the model to disk
+		ExpensesController.getInstance().save();
+		
 	}
 	
 }

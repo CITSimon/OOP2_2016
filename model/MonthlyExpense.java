@@ -1,6 +1,8 @@
 package model;
 
-public class MonthlyExpense extends Expense 
+import java.io.Serializable;
+
+public class MonthlyExpense extends Expense implements Serializable
 {
 	private int dateInMonth;
 	
@@ -18,5 +20,10 @@ public class MonthlyExpense extends Expense
 		//This is the most straightford as the cost per month is just the amount seeing
 		//as this class is MonthlyExpense.
 		return getAmount();
+	}
+	
+	public String toString()
+	{
+		return super.toString() + " "+this.dateInMonth;
 	}
 }

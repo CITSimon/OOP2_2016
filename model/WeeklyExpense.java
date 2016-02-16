@@ -1,6 +1,8 @@
 package model;
 
-public class WeeklyExpense extends Expense 
+import java.io.Serializable;
+
+public class WeeklyExpense extends Expense implements Serializable
 {
 	//static means a class variable shared by all instances of the class.
 	public static final int SUNDAY = 1;
@@ -24,5 +26,9 @@ public class WeeklyExpense extends Expense
 	public double calculateCostPerMonth()
 	{
 		return getAmount() * WEEKS_IN_MONTH;
+	}
+	public String toString()
+	{
+		return super.toString() + " "+this.dayOfWeek;
 	}
 }
