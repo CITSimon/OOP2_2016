@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 import model.AnnualExpense;
+import model.Day;
 import model.Expense;
 import model.MonthlyExpense;
 import model.WeeklyExpense;
@@ -13,8 +14,8 @@ public class MockGUITester {
 		
 		//Create a few instances and send them to the controller
 		AnnualExpense carInsurance = new AnnualExpense(311.99, "car insurance", "Insurance for my Ford");
-		MonthlyExpense phone = new MonthlyExpense("Vodafone", 40.00, 22);
-		WeeklyExpense lunch = new WeeklyExpense("lunch", 5, WeeklyExpense.MONDAY);
+		MonthlyExpense phone = new MonthlyExpense("vodafone", 40.00, 22);
+		WeeklyExpense lunch = new WeeklyExpense("lunch", 5, Day.MONDAY);
 		
 		ExpensesController.getInstance().addExpense(carInsurance);
 		ExpensesController.getInstance().addExpense(phone);

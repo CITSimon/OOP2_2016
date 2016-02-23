@@ -7,6 +7,10 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import persistors.DatabasePersistor;
+import persistors.ExpensesPersistor;
+import persistors.FilePersistor;
+
 import model.Expense;
 import model.ExpenseList;
 
@@ -16,9 +20,6 @@ public class ExpensesController
 	//This is the variable which will store the reference to the instance of this class when created).
 	private static ExpensesController instance;
 	
-	//This is a constant pointing to the location of the file on disk where we are going to serialize the
-	//model object ExpenseList.
-	private static final String FILE_LOCATION ="C:\\expenses\\myfile.dat";
 	
 	//This public method is called by calling ExpensesController.getInstance(). It manages the
 	//private static variable called instance above which will point at the instance of the class when created.
@@ -35,15 +36,37 @@ public class ExpensesController
 	//========== Instance part of the class ==========
 	
 	//Instance variable referring to the model
-	private ExpenseList model; 
+	private ExpenseList model;
+	
+	//Instance variable referring to the persistor
+	private ExpensesPersistor persistor;
+	
+	//Instance variable to keep track of what persistence mode
+	//the controller is currently in
+	private PersistenceType pType;
 	
 	//Constructor
 	private ExpensesController()
 	{
 		//Create an instance of the model
 		this.model = new ExpenseList();
+		//When the controller is initially created we default the persistence mode
+		//to FILE here in the constructor.
+		setPersistenceMode(PersistenceType.FILE);
 	}
 	
+	public void setPersistenceMode(PersistenceType mode)
+	{
+		this.pType = mode;
+		//Change the persistor being used.
+		
+		switch(mode)
+		{
+			case FILE : this.persistor = new FilePersistor(); break;
+			case DATABASE : this.persistor = new DatabasePersistor(); break;
+		}
+		
+	}
 	
 	public void addExpense(Expense e)
 	{
@@ -63,7 +86,6 @@ public class ExpensesController
 	
 	public ArrayList<Expense> getListOfExpenses()
 	{
-		Collections.sort(this.model.getExpenses());
 		return this.model.getExpenses();
 	}
 		
@@ -74,45 +96,21 @@ public class ExpensesController
 	
 	public void load()
 	{
-		try
-		{
-			FileInputStream fis = new FileInputStream(FILE_LOCATION);
-			ObjectInputStream ois = new ObjectInputStream(fis);
-			this.model = (ExpenseList)ois.readObject();
-			ois.close();
-		}
-		catch(FileNotFoundException f)
-		{
-			System.out.println(f.getMessage());
-		}
-		catch(IOException i)
-		{
-			System.out.println(i.getMessage());
-		}
-		catch(ClassNotFoundException c)
-		{
-			System.out.println(c.getMessage());
-		}
+		this.model = this.persistor.load();
 	}
 	
 	public void save()
 	{
-		try
-		{
-			FileOutputStream fos = new FileOutputStream(FILE_LOCATION);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(this.model);
-			oos.close();
-		}
-		catch(FileNotFoundException f)
-		{
-			System.out.println(f.getMessage());
-		}
-		catch(IOException i)
-		{
-			System.out.println(i.getMessage());
-		}
+		//We delegate the saving of the model to the persistor.
+		//This is an example of abstraction as the controller has no knowledge of the 
+		//inner workings of the persistor.
+		this.persistor.save(this.model);
 	}
+	
+	
+	
+	
+	
 	
 	
 	

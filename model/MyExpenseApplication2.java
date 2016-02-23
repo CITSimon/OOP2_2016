@@ -8,7 +8,7 @@ public class MyExpenseApplication2 {
 		ExpenseList myList = new ExpenseList();
 
 		MonthlyExpense phone = new MonthlyExpense("Phone", 30, 22);
-		WeeklyExpense bus = new WeeklyExpense("Bus", 2.50, WeeklyExpense.TUESDAY);
+		WeeklyExpense bus = new WeeklyExpense("Bus", 2.50, Day.TUESDAY);
 		AnnualExpense carInsurance = new AnnualExpense(350.25, "Car Insurance", "Insured with AVIVA - Policy ABC123");
 		
 		myList.add(phone);
