@@ -1,12 +1,14 @@
-import java.util.ArrayList;
-
 import model.AnnualExpense;
 import model.Day;
-import model.Expense;
 import model.MonthlyExpense;
 import model.WeeklyExpense;
 
-public class MockGUITester {
+/**
+ * This class creates three expenses and saves them to disk
+ * @author Simon
+ *
+ */
+public class MockGUITesterCreatingExpensesAndSavingToDisk {
 
 	public static void main(String[] args)
 	{
@@ -20,16 +22,7 @@ public class MockGUITester {
 		ExpensesController.getInstance().addExpense(carInsurance);
 		ExpensesController.getInstance().addExpense(phone);
 		ExpensesController.getInstance().addExpense(lunch);
-		
-		//Display our expenses
-		ArrayList<Expense> expenseList = ExpensesController.getInstance().getListOfExpenses();
-		for(Expense e : expenseList)
-		{
-			System.out.println(e.getName()+ " "+e.getAmount());
-		}
-		
-		//Show the total
-		System.out.println("Total Monthly Expense = "+ExpensesController.getInstance().getMonthlyCost());
+	
 		
 		//Save the model to disk
 		ExpensesController.getInstance().save();

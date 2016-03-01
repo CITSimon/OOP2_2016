@@ -2,7 +2,8 @@ package model;
 
 import java.io.Serializable;
 
-public class AnnualExpense extends Expense implements Serializable{
+public class AnnualExpense extends Expense implements Serializable
+{
 	
 	private String description;
 	
@@ -23,4 +24,5 @@ public class AnnualExpense extends Expense implements Serializable{
 	{
 		return super.toString() + " "+this.description;
 	}
+	
 }

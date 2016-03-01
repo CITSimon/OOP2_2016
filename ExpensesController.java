@@ -84,9 +84,9 @@ public class ExpensesController
 		
 	}
 	
-	public ArrayList<Expense> getListOfExpenses()
+	public ExpenseList getListOfExpenses()
 	{
-		return this.model.getExpenses();
+		return this.model;
 	}
 		
 	public double getMonthlyCost()

@@ -2,15 +2,18 @@ package model;
 
 import java.io.Serializable;
 
-public abstract class Expense implements Serializable 
+public abstract class Expense implements Serializable, Cloneable 
 {
 	private double amount;
 	private String name;
+	private long creationTimeAndDate;
+	
 	
 	public Expense(double amount, String name)
 	{
 		this.amount = amount;
 		this.name = name;
+		this.creationTimeAndDate = System.currentTimeMillis();
 	}
 	
 	public double getAmount()
@@ -32,8 +35,12 @@ public abstract class Expense implements Serializable
 	{
 		this.name = name;
 	}
-	
-	
+		
+	public long getCreationDateTime()
+	{
+		return this.creationTimeAndDate;
+	}
+
 	public abstract double calculateCostPerMonth();
 	
 	//Override the toString() method
@@ -41,4 +48,28 @@ public abstract class Expense implements Serializable
 	{
 		return this.amount+" "+this.name;
 	}
+	
+	public Expense clone() throws CloneNotSupportedException
+	{
+		try
+		{
+			return (Expense)super.clone();
+		}
+		catch(CloneNotSupportedException e)
+		{
+			throw new CloneNotSupportedException(e.getMessage());
+		}
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
