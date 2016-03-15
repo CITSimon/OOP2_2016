@@ -16,12 +16,10 @@ public class MockGUITesterCreatingExpensesAndSavingToDatabase {
 		
 		//Create a few instances and send them to the controller
 		AnnualExpense carInsurance = new AnnualExpense(311.99, "car insurance", "Insurance for my Ford");
-		MonthlyExpense phone = new MonthlyExpense("vodafone", 40.00, 22);
-		WeeklyExpense lunch = new WeeklyExpense("lunch", 5, Day.MONDAY);
-		
+		AnnualExpense phone = new AnnualExpense(51.99, "mobile phone", "my iPhone");
+			
 		ExpensesController.getInstance().addExpense(carInsurance);
 		ExpensesController.getInstance().addExpense(phone);
-		ExpensesController.getInstance().addExpense(lunch);
 	
 		//The controller initially starts up in FILE persistence mode so now we want to switch it to DATABASE.
 		ExpensesController.getInstance().setPersistenceMode(PersistenceType.DATABASE);

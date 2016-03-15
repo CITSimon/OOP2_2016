@@ -1,6 +1,9 @@
 package model;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public abstract class Expense implements Serializable, Cloneable 
 {
@@ -14,6 +17,14 @@ public abstract class Expense implements Serializable, Cloneable
 		this.amount = amount;
 		this.name = name;
 		this.creationTimeAndDate = System.currentTimeMillis();
+	}
+	//Overloaded constructor to allow setting of all three attributes. This would typically be
+	//used when loading a saved Expense from the database.
+	public Expense(double amount, String name, long creationTime)
+	{
+		this.amount = amount;
+		this.name = name;
+		this.creationTimeAndDate = creationTime;
 	}
 	
 	public double getAmount()
@@ -46,7 +57,13 @@ public abstract class Expense implements Serializable, Cloneable
 	//Override the toString() method
 	public String toString()
 	{
-		return this.amount+" "+this.name;
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(this.creationTimeAndDate);
+		DateFormat myFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
+		String formattedDateString = myFormat.format(cal.getTime());
+		
+		
+		return this.amount+" "+this.name + " "+formattedDateString;
 	}
 	
 	public Expense clone() throws CloneNotSupportedException
