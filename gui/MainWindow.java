@@ -3,23 +3,39 @@ package gui;
 import java.util.ArrayList;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.AnnualExpense;
+import model.Expense;
+import model.ExpenseList;
+import controller.ExpensesController;
 
 public class MainWindow extends Application {
 
 	public static final int NO_OF_ROWS = 6;
 	public static final int NO_OF_COLS = 2;
+	
+	private ListView lview;
+	private ObservableList<Expense> observableExpenseList;
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -32,6 +48,7 @@ public class MainWindow extends Application {
 		bp.setLeft(createLeftPane());
 		bp.setTop(createTopPanel());
 		bp.setCenter(createCenterPane());
+		bp.setRight(createRightPane());
 		
 		Scene firstScene = new Scene(bp, 500, 400);
 		stage.setScene(firstScene);
@@ -39,12 +56,51 @@ public class MainWindow extends Application {
 		
 	}
 	
+	private Node createRightPane()
+	{
+		VBox vImageViewBox = new VBox();
+		ImageView ivAddExpense = new ImageView();
+		
+		
+		//Add a mouse click listener to the ImageView
+		ivAddExpense.setOnMouseClicked(new EventHandler<MouseEvent>(){
+			public void handle(MouseEvent e)
+			{
+				Alert alertDialog = new Alert(AlertType.INFORMATION);
+				alertDialog.setHeaderText(null);
+				alertDialog.setTitle("Button Clicked!");
+				alertDialog.setContentText("Add button clicked");
+				alertDialog.showAndWait();
+				
+				//Add a dummy expense
+				Expense dummyExpense = new AnnualExpense(0.0, "dummyname", "dummydescription");
+				//We need to add our new Expense directly to the ObservableList, this then adds
+				//it to the ArrayList which it wraps. We need to do it like this in a "top-down"
+				//fashion rather than adding to the ArrayList from the bottom up. When we add to the
+				//ObservableList the GUI refreshes automatically.
+				observableExpenseList.add(dummyExpense);
+						
+			}
+		});
+		
+	
+		Image plusImage = new Image("plus_sign.png");
+		ivAddExpense.setImage(plusImage);
+		vImageViewBox.getChildren().add(ivAddExpense);
+		return vImageViewBox;
+	}
+	
 	
 	private Node createCenterPane()
 	{
-		VBox vBox = new VBox();
-		vBox.setStyle("-fx-background-color : #FFCCFF");
-		return vBox;
+		this.lview = new ListView();
+		
+		ExpenseList expenseList = ExpensesController.getInstance().getListOfExpenses();
+		ArrayList<Expense> expenses = expenseList.getExpenses();
+		
+		observableExpenseList = FXCollections.observableList(expenses);
+		lview.setItems(observableExpenseList);
+		return lview;
 	}
 	
 	private Node createBottomPane()
